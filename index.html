@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillTrack | Student Learning Portal</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fc;
+    color: #17233d;
+}
+
+header {
+    background: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px #00000010;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    color: #4968e8;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 12px;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #4968e8;
+}
+
+button, .btn {
+    background: #4968e8;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover, .btn:hover {
+    background: #304fcf;
+}
+
+.hero {
+    padding: 75px 8%;
+    background: linear-gradient(120deg,#e9edff,#f8f9ff);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.hero-content {
+    max-width: 550px;
+}
+
+.hero h1 {
+    font-size: 45px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #4968e8;
+}
+
+.hero p {
+    color: #667085;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.hero-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 300px;
+    box-shadow: 0 10px 30px #00000010;
+}
+
+.hero-card h2 {
+    color: #4968e8;
+    font-size: 38px;
+    margin: 15px 0;
+}
+
+section {
+    padding: 55px 8%;
+}
+
+.section-title {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.section-description {
+    color: #777;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.login-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 450px;
+    box-shadow: 0 5px 20px #00000008;
+}
+
+input, select {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.course-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
+}
+
+.course {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px #00000008;
+}
+
+.course h3 {
+    margin: 15px 0;
+}
+
+.course p {
+    color: #777;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.course-icon {
+    font-size: 35px;
+}
+
+.quiz-box {
+    background: white;
+    padding: 30px;
+    max-width: 650px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px #00000008;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #f1f3fa;
+    color: #17233d;
+    margin: 12px 0;
+}
+
+.option:hover {
+    background: #e1e7ff;
+    color: #17233d;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.assignment-box {
+    background: white;
+    padding: 25px;
+    max-width: 600px;
+    border-radius: 12px;
+}
+
+.dashboard {
+    background: #e9edff;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.dashboard h3 {
+    margin-bottom: 15px;
+}
+
+.dashboard p {
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    background: #17233d;
+    color: white;
+    padding: 25px;
+}
+
+.hidden {
+    display: none;
+}
+
+#message {
+    color: green;
+    margin-top: 12px;
+}
+
+@media(max-width:600px) {
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        text-align: center;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 6px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">SkillTrack</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#courses">Courses</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#assignment">Assignment</a>
+        <a href="#dashboard">Dashboard</a>
+    </nav>
+
+    <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
+</header>
+
+<!-- HOME -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+        <h1>Learn New Skills.<br>
+        <span>Build Your Future.</span></h1>
+
+        <p>
+            Welcome to SkillTrack, your personal learning platform.
+            Explore courses, test your knowledge, submit assignments
+            and track your educational progress.
+        </p>
+
+        <a href="#courses" class="btn">Explore Courses</a>
+    </div>
+
+    <div class="hero-card">
+        <h3>Your Learning Progress</h3>
+        <h2 id="progress">0%</h2>
+        <p>Quiz performance</p>
+        <p>Quizzes completed: <b id="quizCount">0</b></p>
+        <p>Courses completed: <b id="courseCount">0</b></p>
+    </div>
+
+</section>
+
+<!-- LOGIN -->
+
+<section id="account">
+
+    <h2 class="section-title">Student Account</h2>
+    <p class="section-description">
+        Register or login to start your learning journey.
+    </p>
+
+    <div class="login-box">
+
+        <h3>Create Account / Login</h3>
+
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+
+        <button onclick="register()">Register</button>
+        <button onclick="login()">Login</button>
+
+        <p id="message"></p>
+
+    </div>
+
+</section>
+
+<!-- COURSES -->
+
+<section id="courses">
+
+    <h2 class="section-title">Our Popular Courses</h2>
+
+    <p class="section-description">
+        Choose your favourite subject and improve your skills.
+    </p>
+
+    <div class="course-container">
+
+        <div class="course">
+            <div class="course-icon">💻</div>
+            <h3>HTML & CSS</h3>
+            <p>Learn how to create and design beautiful websites.</p>
+            <button onclick="completeCourse('HTML & CSS')">
+                Complete Course
+            </button>
+        </div>
+
+        <div class="course">
+            <div class="course-icon">⚡</div>
+            <h3>JavaScript</h3>
+            <p>Learn programming and interactive website features.</p>
+            <button onclick="completeCourse('JavaScript')">
+                Complete Course
+            </button>
+        </div>
+
+        <div class="course">
+            <div class="course-icon">🐙</div>
+            <h3>GitHub</h3>
+            <p>Learn repositories and how to manage your code.</p>
+            <button onclick="completeCourse('GitHub')">
+                Complete Course
+            </button>
+        </div>
+
+        <div class="course">
+            <div class="course-icon">🗄️</div>
+            <h3>SQL</h3>
+            <p>Understand databases and how to manage information.</p>
+            <button onclick="completeCourse('SQL')">
+                Complete Course
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- QUIZ -->
+
+<section id="quiz">
+
+    <h2 class="section-title">Test Your Knowledge</h2>
+
+    <p class="section-description">
+        Attempt these questions and check your knowledge.
+    </p>
+
+    <div class="quiz-box">
+
+        <h3 id="question">Question will appear here</h3>
+
+        <div id="options"></div>
+
+        <p id="feedback"></p>
+
+        <br>
+
+        <button id="nextBtn" onclick="nextQuestion()" disabled>
+            Next Question
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ASSIGNMENT -->
+
+<section id="assignment">
+
+    <h2 class="section-title">Submit Your Assignment</h2>
+
+    <p class="section-description">
+        Submit your completed academic work.
+    </p>
+
+    <div class="assignment-box">
+
+        <form id="assignmentForm">
+
+            <label>Student Name</label>
+            <input type="text" id="studentName" required>
+
+            <label>Assignment Title</label>
+            <input type="text" id="title" required>
+
+            <label>Select Course</label>
+            <select id="subject" required>
+                <option value="">Select Course</option>
+                <option>HTML & CSS</option>
+                <option>JavaScript</option>
+                <option>GitHub</option>
+                <option>SQL</option>
+            </select>
+
+            <label>Assignment Link</label>
+            <input type="url" id="link" placeholder="https://..." required>
+
+            <button type="submit">Submit Assignment</button>
+
+        </form>
+
+        <p id="assignmentMessage"></p>
+
+    </div>
+
+</section>
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+    <h2 class="section-title">Student Dashboard</h2>
+
+    <div class="dashboard">
+
+        <h3>My Learning Summary</h3>
+
+        <p>Student: <b id="studentDisplay">Guest</b></p>
+
+        <p>Completed Courses:
+            <b id="completedDisplay">0</b>
+        </p>
+
+        <p>Quiz Attempts:
+            <b id="attemptDisplay">0</b>
+        </p>
+
+        <p>Average Quiz Score:
+            <b id="averageDisplay">0%</b>
+        </p>
+
+    </div>
+
+</section>
+
+<footer>
+    <h3>SkillTrack</h3>
+    <p>Learn Consistently. Grow Confidently.</p>
+    <p>© 2026 SkillTrack Student Project</p>
+</footer>
+
+<script>
+
+// DEMO DATA
+
+let currentUser = JSON.parse(
+    localStorage.getItem("skilltrackUser")
+);
+
+let users = JSON.parse(
+    localStorage.getItem("skilltrackUsers")
+) || [];
+
+let courses = JSON.parse(
+    localStorage.getItem("skilltrackCourses")
+) || [];
+
+let scores = JSON.parse(
+    localStorage.getItem("skilltrackScores")
+) || [];
+
+let assignments = JSON.parse(
+    localStorage.getItem("skilltrackAssignments")
+) || [];
+
+// REGISTER
+
+function register() {
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+
+    if (!name || !email || password.length < 4) {
+        showMessage("Enter valid details. Password must have 4 characters.");
+        return;
+    }
+
+    if (users.some(user => user.email === email)) {
+        showMessage("This email is already registered.");
+        return;
+    }
+
+    users.push({name, email, password});
+
+    localStorage.setItem("skilltrackUsers", JSON.stringify(users));
+
+    currentUser = {name, email};
+
+    localStorage.setItem("skilltrackUser", JSON.stringify(currentUser));
+
+    showMessage("Registration successful!");
+
+    updateDashboard();
+}
+
+// LOGIN
+
+function login() {
+
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+
+    const user = users.find(
+        u => u.email === email && u.password === password
+    );
+
+    if (!user) {
+        showMessage("Invalid login details. Please register first.");
+        return;
+    }
+
+    currentUser = {name: user.name, email: user.email};
+
+    localStorage.setItem("skilltrackUser", JSON.stringify(currentUser));
+
+    showMessage("Login successful!");
+
+    updateDashboard();
+}
+
+function logout() {
+
+    currentUser = null;
+
+    localStorage.removeItem("skilltrackUser");
+
+    updateDashboard();
+    showMessage("You have logged out.");
+}
+
+function showMessage(message) {
+    document.getElementById("message").textContent = message;
+}
+
+// COMPLETE COURSE
+
+function completeCourse(course) {
+
+    if (!currentUser) {
+        alert("Please register or login first.");
+        return;
+    }
+
+    if (!courses.includes(course)) {
+        courses.push(course);
+
+        localStorage.setItem(
+            "skilltrackCourses",
+            JSON.stringify(courses)
+        );
+    }
+
+    updateDashboard();
+
+    alert(course + " marked as completed!");
+}
+
+// QUIZ QUESTIONS
+
+const questions = [
+    {
+        question: "Which language creates webpage structure?",
+        options: ["HTML", "CSS", "SQL", "Python"],
+        answer: "HTML"
+    },
+    {
+        question: "Which language styles a website?",
+        options: ["Java", "CSS", "SQL", "C++"],
+        answer: "CSS"
+    },
+    {
+        question: "What is GitHub used for?",
+        options: [
+            "Cooking",
+            "Code hosting and collaboration",
+            "Playing games",
+            "Making videos"
+        ],
+        answer: "Code hosting and collaboration"
+    },
+    {
+        question: "Which SQL command retrieves data?",
+        options: ["DELETE", "SELECT", "DROP", "UPDATE"],
+        answer: "SELECT"
+    },
+    {
+        question: "What is Firebase?",
+        options: [
+            "A database and app development platform",
+            "A text editor",
+            "A browser",
+            "A programming language"
+        ],
+        answer: "A database and app development platform"
+    }
+];
+
+let questionIndex = 0;
+let quizScore = 0;
+let answered = false;
+
+function loadQuestion() {
+
+    answered = false;
+
+    const q = questions[questionIndex];
+
+    document.getElementById("question").textContent =
+        (questionIndex + 1) + ". " + q.question;
+
+    document.getElementById("options").innerHTML = "";
+
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("nextBtn").disabled = true;
+
+    q.options.forEach(option => {
+
+        const btn = document.createElement("button");
+
+        btn.textContent = option;
+        btn.className = "option";
+
+        btn.onclick = () => checkAnswer(option);
+
+        document.getElementById("options").appendChild(btn);
+
+    });
+}
+
+function checkAnswer(selected) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const correct = questions[questionIndex].answer;
+
+    const buttons = document.querySelectorAll(".option");
+
+    buttons.forEach(btn => {
+        btn.disabled = true;
+
+        if (btn.textContent === correct) {
+            btn.style.background = "#c9f4dd";
+        } else if (btn.textContent === selected) {
+            btn.style.background = "#ffdada";
+        }
+    });
+
+    if (selected === correct) {
+        quizScore++;
+        document.getElementById("feedback").textContent = "Correct answer!";
+    } else {
+        document.getElementById("feedback").textContent =
+            "Incorrect. Correct answer: " + correct;
+    }
+
+    document.getElementById("nextBtn").disabled = false;
+}
+
+function nextQuestion() {
+
+    questionIndex++;
+
+    if (questionIndex < questions.length) {
+        loadQuestion();
+    } else {
+
+        scores.push(quizScore);
+
+        localStorage.setItem(
+            "skilltrackScores",
+            JSON.stringify(scores)
+        );
+
+        document.getElementById("question").textContent =
+            "Quiz Completed!";
+
+        document.getElementById("options").innerHTML = "";
+
+        document.getElementById("feedback").textContent =
+            "Your score is " + quizScore + " out of " + questions.length;
+
+        document.getElementById("nextBtn").textContent = "Try Again";
+
+        document.getElementById("nextBtn").onclick = restartQuiz;
+
+        updateDashboard();
+    }
+}
+
+function restartQuiz() {
+
+    questionIndex = 0;
+    quizScore = 0;
+
+    document.getElementById("nextBtn").textContent = "Next Question";
+    document.getElementById("nextBtn").onclick = nextQuestion;
+
+    loadQuestion();
+}
+
+// ASSIGNMENT SUBMISSION
+
+document.getElementById("assignmentForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const assignment = {
+        name: document.getElementById("studentName").value,
+        title: document.getElementById("title").value,
+        subject: document.getElementById("subject").value,
+        link: document.getElementById("link").value
+    };
+
+    assignments.push(assignment);
+
+    localStorage.setItem(
+        "skilltrackAssignments",
+        JSON.stringify(assignments)
+    );
+
+    document.getElementById("assignmentMessage").textContent =
+        "Assignment saved successfully in this browser!";
+
+    this.reset();
+
+    updateDashboard();
+
+});
+
+// DASHBOARD
+
+function updateDashboard() {
+
+    document.getElementById("studentDisplay").textContent =
+        currentUser ? currentUser.name : "Guest";
+
+    document.getElementById("completedDisplay").textContent =
+        courses.length;
+
+    document.getElementById("attemptDisplay").textContent =
+        scores.length;
+
+    const total = scores.reduce((a,b) => a+b, 0);
+
+    const average = scores.length
+        ? Math.round(total / (scores.length * questions.length) * 100)
+        : 0;
+
+    document.getElementById("averageDisplay").textContent =
+        average + "%";
+
+    document.getElementById("progress").textContent =
+        average + "%";
+
+    document.getElementById("quizCount").textContent =
+        scores.length;
+
+    document.getElementById("courseCount").textContent =
+        courses.length;
+
+    document.getElementById("logoutBtn").classList.toggle(
+        "hidden", !currentUser
+    );
+}
+
+// INITIALIZE WEBSITE
+
+loadQuestion();
+updateDashboard();
+
+</script>
+
+</body>
+</html>
