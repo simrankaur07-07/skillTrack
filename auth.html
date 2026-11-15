@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SkillTrack | Login & Sign Up</title>
 
 <style>
@@ -19,7 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #101b3f, #344f9c);
+    background: linear-gradient(135deg, #101b3f, #4968e8);
     padding: 20px;
 }
 
@@ -122,7 +123,7 @@ input:focus {
     text-align: center;
     margin-top: 15px;
     font-size: 14px;
-    color: #3454a4;
+    overflow-wrap: anywhere;
 }
 
 .back {
@@ -144,11 +145,15 @@ input:focus {
     <p class="subtitle">Learn Skills. Build Your Future.</p>
 
     <div class="tabs">
-        <button id="loginTab" class="active"
-        onclick="showForm('login')">Login</button>
+        <button type="button" id="loginTab"
+        class="active" onclick="showForm('login')">
+            Login
+        </button>
 
-        <button id="signupTab"
-        onclick="showForm('signup')">Sign Up</button>
+        <button type="button" id="signupTab"
+        onclick="showForm('signup')">
+            Sign Up
+        </button>
     </div>
 
     <!-- LOGIN FORM -->
@@ -156,11 +161,11 @@ input:focus {
 
         <h2>Welcome Back!</h2>
 
-        <label>Email Address</label>
+        <label for="loginEmail">Email Address</label>
         <input type="email" id="loginEmail"
         placeholder="Enter your email" required>
 
-        <label>Password</label>
+        <label for="loginPassword">Password</label>
         <input type="password" id="loginPassword"
         placeholder="Enter your password" required>
 
@@ -177,19 +182,20 @@ input:focus {
 
         <h2>Create Account</h2>
 
-        <label>Full Name</label>
+        <label for="signupName">Full Name</label>
         <input type="text" id="signupName"
         placeholder="Enter your full name" required>
 
-        <label>Email Address</label>
+        <label for="signupEmail">Email Address</label>
         <input type="email" id="signupEmail"
         placeholder="Enter your email" required>
 
-        <label>Password</label>
+        <label for="signupPassword">Password</label>
         <input type="password" id="signupPassword"
-        placeholder="Create a password" minlength="6" required>
+        placeholder="Create a password"
+        minlength="6" required>
 
-        <label>Confirm Password</label>
+        <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword"
         placeholder="Confirm your password" required>
 
@@ -205,105 +211,124 @@ input:focus {
 
 </div>
 
-<script>
+<script type="module">
 
-// Switch between Login and Sign Up
-function showForm(type) {
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile
+} from
+"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
-    const loginTab = document.getElementById("loginTab");
-    const signupTab = document.getElementById("signupTab");
+// YOUR FIREBASE CONFIGURATION
+const firebaseConfig = {
+    apiKey: "AIzaSyCxNJ2Fl_XAb0eMiX4KJv6uJaevrLofB-s",
+    authDomain: "skilltrack-890ee.firebaseapp.com",
+    projectId: "skilltrack-890ee",
+    storageBucket: "skilltrack-890ee.firebasestorage.app",
+    messagingSenderId: "964371909766",
+    appId: "1:964371909766:web:d2587a16448c86baae9507",
+    measurementId: "G-4X4JKDS42K"
+};
 
-    loginForm.classList.remove("active");
-    signupForm.classList.remove("active");
+// INITIALIZE FIREBASE
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    loginTab.classList.remove("active");
-    signupTab.classList.remove("active");
+// SWITCH LOGIN AND SIGNUP
+window.showForm = function(type) {
 
-    if (type === "login") {
-        loginForm.classList.add("active");
-        loginTab.classList.add("active");
-    } else {
-        signupForm.classList.add("active");
-        signupTab.classList.add("active");
-    }
-}
+    document.getElementById("loginForm")
+    .classList.toggle("active", type === "login");
 
-// Sign Up
+    document.getElementById("signupForm")
+    .classList.toggle("active", type === "signup");
+
+    document.getElementById("loginTab")
+    .classList.toggle("active", type === "login");
+
+    document.getElementById("signupTab")
+    .classList.toggle("active", type === "signup");
+
+};
+
+// SIGN UP FUNCTION
 document.getElementById("signupForm")
-.addEventListener("submit", function(event) {
+.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    const name = document.getElementById("signupName").value;
-    const email = document.getElementById("signupEmail").value;
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
     const password = document.getElementById("signupPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
     const message = document.getElementById("signupMessage");
+
+    message.style.color = "red";
 
     if (password !== confirmPassword) {
         message.textContent = "Passwords do not match!";
         return;
     }
 
-    let users = JSON.parse(localStorage.getItem("skilltrackUsers")) || [];
+    try {
 
-    const existingUser = users.find(user => user.email === email);
+        const result = await createUserWithEmailAndPassword(
+            auth, email, password
+        );
 
-    if (existingUser) {
-        message.textContent = "This email is already registered!";
-        return;
+        await updateProfile(result.user, {
+            displayName: name
+        });
+
+        message.style.color = "green";
+        message.textContent = "Account created successfully!";
+
+        document.getElementById("signupForm").reset();
+
+    } catch (error) {
+
+        message.textContent = error.message;
+
     }
-
-    users.push({
-        name: name,
-        email: email,
-        password: password
-    });
-
-    localStorage.setItem("skilltrackUsers", JSON.stringify(users));
-
-    message.textContent = "Account created successfully! Please login.";
-
-    document.getElementById("signupForm").reset();
 
 });
 
-// Login
+// LOGIN FUNCTION
 document.getElementById("loginForm")
-.addEventListener("submit", function(event) {
+.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    const email = document.getElementById("loginEmail").value;
+    const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
 
     const message = document.getElementById("loginMessage");
 
-    let users = JSON.parse(localStorage.getItem("skilltrackUsers")) || [];
+    message.style.color = "red";
 
-    const user = users.find(
-        user => user.email === email && user.password === password
-    );
+    try {
 
-    if (user) {
+        await signInWithEmailAndPassword(
+            auth, email, password
+        );
 
-        localStorage.setItem("skilltrackLoggedInUser", JSON.stringify({
-            name: user.name,
-            email: user.email
-        }));
-
+        message.style.color = "green";
         message.textContent = "Login successful!";
 
         setTimeout(function() {
             window.location.href = "index.html";
         }, 1000);
 
-    } else {
-        message.textContent = "Invalid email or password!";
+    } catch (error) {
+
+        message.textContent = error.message;
+
     }
 
 });
