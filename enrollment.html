@@ -2,224 +2,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillTrack Enrollment</title>
 
-<title>SkillTrack | Course Enrollment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            padding: 30px 15px;
+        }
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #0002;
+        }
 
-body {
-    background: linear-gradient(135deg, #101b3f, #4968e8);
-    min-height: 100vh;
-    padding: 30px 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
 
-.container {
-    background: white;
-    width: 100%;
-    max-width: 550px;
-    padding: 35px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 9px 0 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
 
-.logo {
-    text-align: center;
-    color: #4968e8;
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-.subtitle {
-    text-align: center;
-    color: #777;
-    margin-bottom: 25px;
-}
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-h2 {
-    color: #17233d;
-    margin-bottom: 10px;
-}
-
-.description {
-    color: #777;
-    font-size: 14px;
-    margin-bottom: 22px;
-}
-
-label {
-    display: block;
-    margin: 15px 0 7px;
-    color: #333;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 7px;
-    font-size: 15px;
-    outline: none;
-}
-
-input:focus, select:focus, textarea:focus {
-    border-color: #4968e8;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 22px;
-    background: #4968e8;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #304fcf;
-}
-
-.message {
-    text-align: center;
-    margin-top: 18px;
-    font-weight: bold;
-    color: green;
-}
-
-.back {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #4968e8;
-    text-decoration: none;
-}
-
-@media(max-width: 500px) {
-    .container {
-        padding: 25px 20px;
-    }
-}
-</style>
+        #message {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
-
-    <div class="logo">SkillTrack</div>
-    <p class="subtitle">Learn Skills. Build Your Future.</p>
-
-    <h2>Course Enrollment</h2>
-
-    <p class="description">
-        Fill in your details below to enroll in your favourite course.
-    </p>
+    <h1>SkillTrack Enrollment</h1>
+    <p>Fill in the form to enroll in your favourite course.</p>
 
     <form id="enrollmentForm">
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name"
-        placeholder="Enter your full name" required>
+        <label>Full Name</label>
+        <input type="text" name="name" required>
 
-        <label for="email">Email Address</label>
-        <input type="email" id="email"
-        placeholder="Enter your email" required>
+        <label>Email Address</label>
+        <input type="email" name="email" required>
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone"
-        placeholder="Enter your phone number"
-        pattern="[0-9]{10}" maxlength="10" required>
+        <label>Phone Number</label>
+        <input type="tel" name="phone" required>
 
-        <label for="course">Select Your Course</label>
-        <select id="course" required>
+        <label>Select Course</label>
+        <select name="course" required>
             <option value="">Choose a course</option>
-            <option value="HTML and CSS">HTML and CSS</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="C++ Programming">C++ Programming</option>
-            <option value="Python Programming">Python Programming</option>
-            <option value="Web Development">Web Development</option>
-            <option value="Database Management">Database Management</option>
+            <option>HTML & CSS</option>
+            <option>JavaScript</option>
+            <option>C Programming</option>
+            <option>C++ Programming</option>
+            <option>Python</option>
         </select>
 
-        <label for="level">Your Learning Level</label>
-        <select id="level" required>
-            <option value="">Select your level</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
+        <label>Learning Level</label>
+        <select name="level" required>
+            <option value="">Choose your level</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
         </select>
 
-        <label for="reason">Why do you want to join this course?</label>
-        <textarea id="reason"
-        placeholder="Write a short answer..."></textarea>
+        <label>Why do you want to join?</label>
+        <textarea name="reason" rows="4" required></textarea>
 
-        <button type="submit">Submit Enrollment</button>
-
-        <p class="message" id="message"></p>
+        <button type="submit" id="submitBtn">Submit Enrollment</button>
 
     </form>
 
-    <a href="index.html" class="back">
-        ← Back to Home
-    </a>
-
+    <p id="message"></p>
 </div>
 
 <script>
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyb2JNHukbgjJknN67PYrZP2VrZf5QB_bsrHeQfRAQ7HLCQBEvfewbbBD6GKVCWW6zT/exec";
 
-document.getElementById("enrollmentForm")
-.addEventListener("submit", function(event) {
+    const form = document.getElementById("enrollmentForm");
+    const message = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
 
-    event.preventDefault();
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();
 
-    const enrollment = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        course: document.getElementById("course").value,
-        level: document.getElementById("level").value,
-        reason: document.getElementById("reason").value
-    };
+        if (scriptURL === "PASTE_YOUR_WEB_APP_URL_HERE") {
+            message.textContent = "Please add your Apps Script URL first.";
+            return;
+        }
 
-    let enrollments = JSON.parse(
-        localStorage.getItem("skilltrackEnrollments")
-    ) || [];
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+        message.textContent = "";
 
-    enrollments.push(enrollment);
+        try {
+            const formData = new FormData(form);
+            const data = new URLSearchParams();
 
-    localStorage.setItem(
-        "skilltrackEnrollments",
-        JSON.stringify(enrollments)
-    );
+            for (const [key, value] of formData.entries()) {
+                data.append(key, value);
+            }
 
-    document.getElementById("message").textContent =
-        "Congratulations! Your enrollment has been submitted.";
+            await fetch(scriptURL, {
+                method: "POST",
+                body: data,
+                mode: "no-cors"
+            });
 
-    document.getElementById("enrollmentForm").reset();
+            message.textContent =
+                "Your request was sent. Check your Google Sheet to confirm it was saved.";
 
-});
+            message.style.color = "green";
+            form.reset();
 
+        } catch (error) {
+            message.textContent = "Submission failed. Please try again.";
+            message.style.color = "red";
+            console.error(error);
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Enrollment";
+    });
 </script>
 
 </body>
